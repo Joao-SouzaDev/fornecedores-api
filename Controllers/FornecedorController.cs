@@ -2,12 +2,14 @@
 using fornecedor_api.Interfaces;
 using fornecedor_api.Models.DTOs;
 using fornecedor_api.Models.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace fornecedor_api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class FornecedorController : ControllerBase
 {
     private IFornecedorService fornecedorService;

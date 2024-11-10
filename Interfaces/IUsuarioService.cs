@@ -5,6 +5,5 @@ namespace fornecedor_api.Interfaces;
 
 public interface IUsuarioService
 {
-    public Task LoginAsync(Usuario usuario);
-    
+    public string LoginAsync(Usuario usuario);
 }

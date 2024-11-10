@@ -7,17 +7,17 @@ namespace fornecedor_api.Services;
 
 public class FornecedorService : IFornecedorService
 {
-    private IRepository<Fornecedor> repository;
+    private readonly IRepository<Fornecedor> _repository;
 
     public FornecedorService(IRepository<Fornecedor> repository)
     {
-        this.repository = repository;
+        this._repository = repository;
     }
     public async Task CadastraFornecedor(Fornecedor fornecedor)
     {
         if(fornecedor is null)
             throw new ArgumentNullException(nameof(fornecedor));
-        await repository.AddAsync(fornecedor);
+        await _repository.AddAsync(fornecedor);
         
     }
 
@@ -25,7 +25,7 @@ public class FornecedorService : IFornecedorService
     {
         try
         {
-            await repository.UpdateAsync(fornecedor);
+            await _repository.UpdateAsync(fornecedor);
         }
         catch (Exception exception)
         {
@@ -36,13 +36,13 @@ public class FornecedorService : IFornecedorService
 
     public async Task<Fornecedor?> BuscarFornecedorPorId(int id)
     {
-        Fornecedor? fornecedor = await repository.GetByIdAsync(id);
+        Fornecedor? fornecedor = await _repository.GetByIdAsync(id);
         return fornecedor;
     }
 
     public async Task<List<Fornecedor>> ListaFornecedores()
     {
-        List<Fornecedor> fornecedores = (await repository.GetAllAsync()).ToList();
+        List<Fornecedor> fornecedores = (await _repository.GetAllAsync()).ToList();
         return fornecedores;
     }
 
@@ -50,7 +50,7 @@ public class FornecedorService : IFornecedorService
     {
         try
         {
-            await repository.DeleteAsync(id);
+            await _repository.DeleteAsync(id);
         }
         catch (DbUpdateException exception)
         {
