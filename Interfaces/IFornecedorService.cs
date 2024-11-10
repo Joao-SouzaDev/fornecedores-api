@@ -8,5 +8,5 @@ public interface IFornecedorService
     public Task AtualizaFornecedor(Fornecedor fornecedor);
     public Task<Fornecedor?> BuscarFornecedorPorId(int id);
     public Task<List<Fornecedor>> ListaFornecedores();
-    public void ExcluirFornecedor(int id);
+    public Task ExcluirFornecedor(int id);
 }

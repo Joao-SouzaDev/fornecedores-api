@@ -1,6 +1,7 @@
 ﻿using fornecedor_api.Data.Repositories;
 using fornecedor_api.Interfaces;
 using fornecedor_api.Models.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace fornecedor_api.Services;
 
@@ -22,7 +23,15 @@ public class FornecedorService : IFornecedorService
 
     public async Task AtualizaFornecedor(Fornecedor fornecedor)
     {
-        throw new NotImplementedException();
+        try
+        {
+            await repository.UpdateAsync(fornecedor);
+        }
+        catch (Exception exception)
+        {
+            throw  new Exception(exception.Message);
+        }
+        
     }
 
     public async Task<Fornecedor?> BuscarFornecedorPorId(int id)
@@ -37,8 +46,15 @@ public class FornecedorService : IFornecedorService
         return fornecedores;
     }
 
-    public void ExcluirFornecedor(int id)
+    public async Task ExcluirFornecedor(int id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            await repository.DeleteAsync(id);
+        }
+        catch (DbUpdateException exception)
+        {
+            throw  new Exception(exception.Message);
+        }
     }
 }
