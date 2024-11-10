@@ -1,4 +1,5 @@
 using fornecedor_api.Data.Context;
+using fornecedor_api.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using MySqlConnector;
 
@@ -11,7 +12,7 @@ builder.Services.AddSwaggerGen();
 var connectionString = builder.Configuration.GetConnectionString("FornecedoresContext");
 builder.Services.AddDbContext<FornecedoresContext>(opts => opts.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 var app = builder.Build();
-
+builder.Services.AddScoped(typeof(IRepository<>),typeof(Repository<>));
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
