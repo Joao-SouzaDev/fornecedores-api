@@ -51,10 +51,12 @@ builder.Services.AddSwaggerGen(c =>
 var connectionString = builder.Configuration.GetConnectionString("FornecedoresContext");
 builder.Services.AddDbContext<FornecedoresContext>(opts => opts.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 builder.Services.AddScoped(typeof(IRepository<Fornecedor>),typeof(Repository<Fornecedor>));
+builder.Services.AddScoped(typeof(IRepository<EnderecoFornecedor>),typeof(Repository<EnderecoFornecedor>));
 builder.Services.AddScoped(typeof(IUsuarioRepository),typeof(UsuarioRepository));
 builder.Services.AddScoped(typeof(IUsuarioService), typeof(UsuarioService));
 builder.Services.AddScoped(typeof(IAuthServices), typeof(AuthServices));
 builder.Services.AddScoped(typeof(IFornecedorService),typeof(FornecedorService));
+builder.Services.AddScoped(typeof(IEnderecoFornecedorService), typeof(EnderecoFornecedorService));
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var key = Encoding.UTF8.GetBytes(Settings.Secret);

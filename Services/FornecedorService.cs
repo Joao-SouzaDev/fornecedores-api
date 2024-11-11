@@ -18,7 +18,6 @@ public class FornecedorService : IFornecedorService
         if(fornecedor is null)
             throw new ArgumentNullException(nameof(fornecedor));
         await _repository.AddAsync(fornecedor);
-        
     }
 
     public async Task AtualizaFornecedor(Fornecedor fornecedor)

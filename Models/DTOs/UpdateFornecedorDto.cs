@@ -2,7 +2,7 @@
 
 namespace fornecedor_api.Models.DTOs;
 
-public class CreateFornecedorDto
+public class UpdateFornecedorDto
 {
     [Required]
     public string Nome { get; set; }
@@ -10,4 +10,5 @@ public class CreateFornecedorDto
     public string Email { get; set; }
     [Required]
     public string Telefone { get; set; }
+    
 }

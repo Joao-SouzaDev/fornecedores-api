@@ -13,11 +13,13 @@ namespace fornecedor_api.Controllers;
 public class FornecedorController : ControllerBase
 {
     private IFornecedorService fornecedorService;
+    private IEnderecoFornecedorService enderecoFornecedorService;
     private IMapper mapper;
-    public FornecedorController(IFornecedorService fornecedorService, IMapper mapper)
+    public FornecedorController(IFornecedorService fornecedorService, IMapper mapper, IEnderecoFornecedorService enderecoFornecedorService)
     {
         this.fornecedorService = fornecedorService;
         this.mapper = mapper;
+        this.enderecoFornecedorService = enderecoFornecedorService;
     }
     [HttpGet]
     public async Task<IActionResult> GetFornecedores()
@@ -34,6 +36,7 @@ public class FornecedorController : ControllerBase
         var fornecedor = await fornecedorService.BuscarFornecedorPorId(id);
         if (fornecedor == null)
             return NotFound();
+        var enderecos =await enderecoFornecedorService.GetByFornecedorIdAsync(fornecedor.Id);
         var fornecedorDto = mapper.Map<ReadFornecedorDto>(fornecedor);
         return Ok(fornecedorDto);
     }
@@ -47,7 +50,7 @@ public class FornecedorController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateFornecedor([FromBody] CreateFornecedorDto fornecedorDto, int id)
+    public async Task<IActionResult> UpdateFornecedor([FromBody] UpdateFornecedorDto fornecedorDto, int id)
     {
         var fornecedor = await fornecedorService.BuscarFornecedorPorId(id);
         if (fornecedor == null)
@@ -63,13 +66,26 @@ public class FornecedorController : ControllerBase
         try
         {
             await fornecedorService.ExcluirFornecedor(id);
-            return Ok();
+            return NoContent();
         }
         catch (Exception exception)
         {
             return BadRequest(exception.Message);
         }
 
+    }
+
+    [HttpPut("{id}/endereco")]
+    public async Task<IActionResult> AdicionaEndereco([FromBody]CreateEnderecoFornecedorDto createEnderecoDto,int id)
+    {
+        var fornecedor = await fornecedorService.BuscarFornecedorPorId(id);
+        if (fornecedor == null)
+            return BadRequest("Fornecedor não encontrado");
+        var endereco = mapper.Map<EnderecoFornecedor>(createEnderecoDto);
+        endereco.FornecedorId = fornecedor.Id;
+        await enderecoFornecedorService.AddAsync(endereco);
+        var readFornecedor = mapper.Map<ReadFornecedorDto>(fornecedor);
+        return Ok(readFornecedor);
     }
 
 }

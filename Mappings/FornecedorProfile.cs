@@ -9,6 +9,8 @@ public class FornecedorProfile : Profile
     public FornecedorProfile()
     {
         CreateMap<CreateFornecedorDto, Fornecedor>();
-        CreateMap<Fornecedor, ReadFornecedorDto>();
+        CreateMap<Fornecedor, ReadFornecedorDto>()
+            .ForMember(dest => dest.Endereco, opt => opt.MapFrom(src => src.Endereco));;
+        CreateMap<UpdateFornecedorDto, Fornecedor>();
     }
 }
