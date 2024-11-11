@@ -52,7 +52,7 @@ var connectionString = builder.Configuration.GetConnectionString("FornecedoresCo
 builder.Services.AddDbContext<FornecedoresContext>(opts => opts.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 builder.Services.AddScoped(typeof(IRepository<Fornecedor>),typeof(Repository<Fornecedor>));
 builder.Services.AddScoped(typeof(IRepository<EnderecoFornecedor>),typeof(Repository<EnderecoFornecedor>));
-builder.Services.AddScoped(typeof(IUsuarioRepository),typeof(UsuarioRepository));
+builder.Services.AddScoped(typeof(IRepository<Usuario>),typeof(Repository<Usuario>));
 builder.Services.AddScoped(typeof(IUsuarioService), typeof(UsuarioService));
 builder.Services.AddScoped(typeof(IAuthServices), typeof(AuthServices));
 builder.Services.AddScoped(typeof(IFornecedorService),typeof(FornecedorService));
